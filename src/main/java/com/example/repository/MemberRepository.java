@@ -71,6 +71,12 @@ public class MemberRepository {
 	public Member save(Member member) {
 		SqlParameterSource param = new BeanPropertySqlParameterSource(member);
 		if (member.getId() == null) {
+			List<Member> memberList = findAll();
+			if(memberList.size() == 0) {
+				member.setAdminFlag(true);
+			}else {
+				member.setAdminFlag(false);
+			}
 			String insertSql = "insert into " + TABLENAME
 					+ " (name,email,password,admin_flag) values(:name,:email,:password,:adminFlag);";
 			KeyHolder keyHolder = new GeneratedKeyHolder();
