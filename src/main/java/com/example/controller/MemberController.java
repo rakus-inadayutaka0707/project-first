@@ -43,7 +43,7 @@ public class MemberController {
 	 */
 	@RequestMapping("/toInsert")
 	public String toInset() {
-		return "member/login";
+		return "member/insert";
 	}
 
 	/**
