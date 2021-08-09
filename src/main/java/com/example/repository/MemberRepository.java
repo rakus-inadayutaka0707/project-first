@@ -77,6 +77,11 @@ public class MemberRepository {
 			}else {
 				member.setAdminFlag(false);
 			}
+			for(Member email:memberList) {
+				if(member.getEmail().equals(email.getEmail())) {
+					return null;
+				}
+			}
 			String insertSql = "insert into " + TABLENAME
 					+ " (name,email,password,admin_flag) values(:name,:email,:password,:adminFlag);";
 			KeyHolder keyHolder = new GeneratedKeyHolder();

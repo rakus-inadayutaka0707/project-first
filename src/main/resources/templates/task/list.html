@@ -4,45 +4,65 @@
 <head>
     <meta charset="UTF-8">
     <title>Insert title here</title>
+    <span th:insert="include::flag_bootstrap"></span>
+    <style>
+        .main {
+            display: flex;
+        }
+
+        .leftContent {
+            width: 70%;
+        }
+
+        .rightContent {
+            width: 30%;
+        }
+
+        table {
+            width: 100%;
+        }
+    </style>
 </head>
 
 <body>
-    <div>
-        <table border="1">
-            <tr>
-                <th>タイトル</th>
-                <th>内容</th>
-                <th>終了予定日</th>
-                <th>完了フラグ</th>
-                <th>タスク削除</th>
-            </tr>
-            <tr th:each="task:${tasks}">
-                <td th:text="${task.title}"></td>
-                <td th:text="${task.context}"></td>
-                <td th:text="${task.finishDate}"></td>
-                <form th:action="@{/task/insert}" th:onject="${insertTaskForm}" method="post">
-                    <td>
-                        <input type="checkbox" name="completeFlag" th:checked="${task.completeFlag} == true">
-                    </td>
-                    <input type="hidden" name="taskId" th:value="${task.id}">
-                </form>
-                <td>
-                    <a th:href="@{/task/delete?id=} + ${task.id}">タスク削除</a>
-                </td>
-            </tr>
-        </table>
-    </div>
-    <div>
-        <form th:action="@{/task/insert}" th:object="${insertTaskForm}" method="post">
-            <label for="title">タイトル:</label>
-            <input type="text" name="title" id="title" th:field="*{title}"><br>
-            <label for="context">内容:</label><br>
-            <textarea name="context" id="context" cols="30" rows="4" th:field="*{context}"></textarea><br>
-            <label for="finishDate">終了予定日:</label>
-            <input type="date" name="finishDate" id="finishDate" th:field="*{finishDate}"><br>
-            <input type="hidden" name="memberId" th:value="${session.member.id}">
-            <button>追加</button>
-        </form>
+    <div class="main">
+        <div class="leftContent">
+            <table>
+                <tr>
+                    <th style="width:20%">タイトル</th>
+                    <th style="width:40%">内容</th>
+                    <th style="width:13%">終了予定日</th>
+                    <th style="width:13%">完了フラグ</th>
+                </tr>
+                <tr th:each="task:${tasks}">
+
+                    <span th:if="${task.completeFlag}==false">
+                        <td th:text="${task.title}"></td>
+                        <td>
+                            <pre th:text="${task.context}"></pre>
+                        </td>
+                        <td th:text="${task.finishDate}"></td>
+                        <td>
+                            <a th:href="@{/task/update?id=} + ${task.id}">完了</a>
+
+                        </td>
+                    </span>
+                </tr>
+            </table>
+        </div>
+        <div class="rightContent">
+            <form th:action="@{/task/insert}" th:object="${insertTaskForm}" method="post">
+                <label for="title">タイトル:</label>
+                <input type="text" name="title" id="title" th:field="*{title}"><br>
+                <label for="context">内容:</label><br>
+                <textarea name="context" id="context" cols="30" rows="4" th:field="*{context}"></textarea><br>
+                <label for="finishDate">終了予定日:</label>
+                <input type="date" name="finishDate" id="finishDate" th:field="*{finishDate}"><br>
+                <input type="hidden" name="memberId" th:value="${session.member.id}">
+                <button>追加</button>
+            </form>
+            <a th:href="@{/task/taskList?id=} + ${session.member.id}">タスク一覧</a>
+        </div>
     </div>
 </body>
 

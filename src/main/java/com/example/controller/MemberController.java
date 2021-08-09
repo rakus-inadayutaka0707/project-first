@@ -54,13 +54,17 @@ public class MemberController {
 	 * @return ログイン画面へ
 	 */
 	@RequestMapping("/insert")
-	public String insert(@Validated InsertMemberForm form, BindingResult result) {
+	public String insert(@Validated InsertMemberForm form, BindingResult result, Model model) {
 		if (result.hasErrors()) {
 			return "member/insert";
 		}
 		Member member = new Member();
 		BeanUtils.copyProperties(form, member);
 		member = service.save(member);
+		if(member == null) {
+			model.addAttribute("errorMessage", "メールアドレスがすでに登録されています。");
+			return "member/insert";
+		}
 		return "redirect:/";
 	}
 

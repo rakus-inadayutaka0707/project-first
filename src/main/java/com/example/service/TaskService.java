@@ -21,6 +21,15 @@ public class TaskService {
 
 	@Autowired
 	private TaskRepository repository;
+	
+	/**
+	 * 登録している1件のタスクを検索
+	 * @param id 検索したいタスク
+	 * @return 検索したタスク
+	 */
+	public Task findById(Integer id) {
+		return repository.findById(id);
+	}
 
 	/**
 	 * 登録しているすべてのタスクを検索する.

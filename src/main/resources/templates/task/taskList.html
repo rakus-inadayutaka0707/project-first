@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Insert title here</title>
+    <span th:insert="include::flag_bootstrap"></span>
+    <style>
+        .main {
+            display: flex;
+        }
+
+        .leftContent {
+            width: 70%;
+        }
+
+        .rightContent {
+            width: 30%;
+        }
+
+        table {
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="main">
+        <div class="leftContent">
+            <table>
+                <tr>
+                    <th style="width:20%">タイトル</th>
+                    <th style="width:40%">内容</th>
+                    <th style="width:13%">終了予定日</th>
+                    <th style="width:13%">タスク削除</th>
+                </tr>
+                <tr th:each="task:${taskList}">
+                    <td th:text="${task.title}"></td>
+                    <td>
+                        <pre th:text="${task.context}"></pre>
+                    </td>
+                    <td th:text="${task.finishDate}"></td>
+                    <td>
+                        <a th:href="@{/task/delete?id=} + ${task.id}">タスク削除</a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="rightContent">
+            <a th:href="@{/task/list}">未完了タスクへ</a>
+        </div>
+    </div>
+</body>
+
+</html>

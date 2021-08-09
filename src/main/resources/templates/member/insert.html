@@ -4,24 +4,49 @@
 <head>
     <meta charset="UTF-8">
     <title>Insert title here</title>
+    <span th:insert="include::flag_bootstrap"></span>
+    <link rel="stylesheet" href="../../static/css/style.css">
+    <style>
+        .formBlock {
+            margin-top: 200px;
+        }
+    </style>
 </head>
 
 <body>
-    <form action="./login.html" th:action="@{/insert}" th:object="${insertMemberForm}" method="post">
-        <div th:errors="*{name}" style="color:red">error</div>
-        <label for="name">名前:</label>
-        <input type="text" name="name" id="name" th:field="*{name}"><br>
+    <div class="container-fluid formBlock">
+        <div class="row justify-content-center">
+            <div class="card col-7">
+                <div class="card-body">
+                    <form action="./login.html" th:action="@{/insert}" th:object="${insertMemberForm}" method="post"
+                        class="text-center col-12">
+                        <div th:errors="*{name}" style="color:red">error</div>
+                        <div class="form-group row">
+                            <label for="name" class="col-4 col-form-label text-right">名前:</label>
+                            <input type="text" name="name" id="name" th:field="*{name}" class="form-control col-7"><br>
+                        </div>
 
-        <div th:errors="*{email}" style="color:red">error</div>
-        <label for="email">メールアドレス:</label>
-        <input type="text" name="email" id="email" th:field="*{email}"><br>
+                        <div th:errors="*{email}" style="color:red">error</div>
+                        <div th:text="${errorMessage}" style="color:red">error</div>
+                        <div class="form-group row">
+                            <label for="email" class="col-4 col-form-label text-right">メールアドレス:</label>
+                            <input type="text" name="email" id="email" th:field="*{email}"
+                                class="form-control col-7"><br>
+                        </div>
 
-        <div th:errors="*{password}" style="color:red">error</div>
-        <label for="password">パスワード</label>
-        <input type="password" name="password" id="password" th:field="*{password}"><br>
+                        <div th:errors="*{password}" style="color:red">error</div>
+                        <div class="form-group row">
+                            <label for="password" class="col-4 col-form-label text-right">パスワード</label>
+                            <input type="password" name="password" id="password" th:field="*{password}"
+                                class="form-control col-7"><br>
+                        </div>
 
-        <button>登録</button>
-    </form>
+                        <button class="btn btn-primary">登録</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>

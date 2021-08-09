@@ -39,6 +39,12 @@ public class TaskController {
 		model.addAttribute("tasks", service.findByMyTasks(member.getId()));
 		return "task/list";
 	}
+	
+	@RequestMapping("/taskList")
+	public String taskList(Integer id, Model model) {
+		model.addAttribute("taskList", service.findByMyTasks(id));
+		return "task/taskList";
+	}
 
 	@RequestMapping("/insert")
 	public String insert(@Validated InsertTaskForm form, BindingResult result) {
@@ -54,9 +60,17 @@ public class TaskController {
 		return "redirect:/task/list";
 	}
 
+	@RequestMapping("/update")
+	public String update(Integer id) {
+		Task task = service.findById(id);
+		task.setCompleteFlag(true);
+		service.save(task);
+		return "redirect:/task/list";
+	}
+
 	@RequestMapping("/delete")
 	public String delete(Integer id) {
 		service.delete(id);
-		return "redirect:/task/list";
+		return "redirect:/task/taskList";
 	}
 }

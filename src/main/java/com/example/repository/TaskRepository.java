@@ -40,6 +40,18 @@ public class TaskRepository {
 	};
 
 	/**
+	 * 登録している1件のタスクを検索
+	 * @param id 検索したいタスク
+	 * @return 検索したタスク
+	 */
+	public Task findById(Integer id) {
+		String sql = "select id,title,context,finish_date,complete_flag,member_id from " + TABLENAME + " where id=:id;";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("id", id);
+		Task task = template.queryForObject(sql, param, TASK_ROW_MAPPER);
+		return task;
+	}
+
+	/**
 	 * 登録しているタスクをすべて検索.
 	 * 
 	 * @return 検索したタスク情報
